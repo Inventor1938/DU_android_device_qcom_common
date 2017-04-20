@@ -313,13 +313,10 @@ int set_interactive_override(__unused struct power_module *module, int on)
         if ((strncmp(governor, INTERACTIVE_GOVERNOR, strlen(INTERACTIVE_GOVERNOR)) == 0) &&
             (strlen(governor) == strlen(INTERACTIVE_GOVERNOR))) {
             int resource_values[] = {0x41410100, 0x64, 0x41410000, 0x64};
-            if (!display_hint_sent) {
-                perform_hint_action(DISPLAY_STATE_HINT_ID,
-                resource_values, sizeof(resource_values)/sizeof(resource_values[0]));
-                display_hint_sent = 1;
-                ALOGI("Display Off hint start");
-                return HINT_HANDLED;
-            }
+            perform_hint_action(DISPLAY_STATE_HINT_ID,
+                    resource_values, ARRAY_SIZE(resource_values));
+            ALOGI("Display Off hint start");
+            return HINT_HANDLED;
         }
     } else {
         /* Display on */
